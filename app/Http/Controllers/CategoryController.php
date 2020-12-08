@@ -30,13 +30,17 @@ class CategoryController extends Controller {
 
     public function store(Request $request) {
         $rules = [
-            'name' => 'required|min:3|max:255'
+            'name' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
         ];
 
         $messages = [
             'name.required' => 'O campo nome deve ser preenchido',
             'name.min' => 'O campo nome deve ter pelo menos 3 caracteres',
-            'name.max' => 'O campo nome deve ter no máximo 255 caracteres'
+            'name.max' => 'O campo nome deve ter no máximo 255 caracteres',
+            'description.required' => 'O campo descrição deve ser preenchido',
+            'description.min' => 'O campo descrição deve ter pelo menos 3 caracteres',
+            'description.max' => 'O campo descrição deve ter no máximo 255 caracteres'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -47,6 +51,8 @@ class CategoryController extends Controller {
 
         $category = new Category();
         $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        $category->active = $request->input('active') == 'on' ? 1 : 0;
         $category->save();
 
         return redirect()->route('categories.index');
@@ -62,13 +68,17 @@ class CategoryController extends Controller {
 
     public function update(Request $request, $id) {
         $rules = [
-            'name' => 'required|min:3|max:255'
+            'name' => 'required|min:3|max:255',
+            'description' => 'required|min:3|max:255',
         ];
 
         $messages = [
             'name.required' => 'O campo nome deve ser preenchido',
             'name.min' => 'O campo nome deve ter pelo menos 3 caracteres',
-            'name.max' => 'O campo nome deve ter no máximo 255 caracteres'
+            'name.max' => 'O campo nome deve ter no máximo 255 caracteres',
+            'description.required' => 'O campo descrição deve ser preenchido',
+            'description.min' => 'O campo descrição deve ter pelo menos 3 caracteres',
+            'description.max' => 'O campo descrição deve ter no máximo 255 caracteres'
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -79,6 +89,8 @@ class CategoryController extends Controller {
 
         $category = Category::find($id);
         $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        $category->active = $request->input('active') == 'on' ? 1 : 0;
         $category->save();
 
         return redirect()->route('categories.index');

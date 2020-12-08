@@ -4,15 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class Post extends Model
 {
-    
     public function category() {
         return $this->belongsTo('App\Category');
     }
-
-    public function options() {
-        return $this->hasMany('App\Option');
-    }
-
 }

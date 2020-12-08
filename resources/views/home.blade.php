@@ -1,45 +1,31 @@
 @extends('partials.layout')
 
 @section('content')
+@include('partials.menu')
 <div class="container">
     <div class="row mt-3">
         <div class="col-12">
-            <h1>LaraQuiz</h1>
-            <p class="lead">Faça Simulados para o ENEM e vestibular</p>
+            <h1>Jornal</h1>
+            <p class="lead">Veja noticias recentes</p>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-12">
-            <form action="{{ route('quiz') }}" method="post">
-                {{ csrf_field() }}
-                <div class="form-row">
-                    <div class="form-group col-4">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Categoria</span>
+            <div class="noticias">
+                @php ($i = 0)
+                @foreach($posts as $post)
+                    @if($post->active && $i < 3)
+                        <a class="link-noticia" href="{{ route('noticia', ['id' => $post->id]) }}">
+                            <div class="noticia texto-quebra">
+                                <div class="post-title">{{ $post->title }}</div>
+                                <div class="post-summary">({{ $post->category->name }}) - {{ $post->summary }}</div>
                             </div>
-                            <select name="category" id="category" class="form-control">
-                                @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group col-4">
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">Número de questões</span>
-                            </div>
-                            <input type="number" class="form-control" name="questions" id="questions" min="1" max="10" value="1">
-                        </div>
-                    </div>
-                    <div class="form-group col-4">
-                        <button type="submit" class="btn btn-block btn-success">Gerar Simulado</button>
-                    </div>
-                </div>
-            </form>
+                        </a>
+                        @php ($i++)
+                    @endif
+                @endforeach
+            </div>
         </div>
     </div>
 </div>
-
 @endsection

@@ -17,12 +17,16 @@
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
-                    <th>Ações</th>
+                    <th class="description">Descrição</th>
+                    <th>Ativo</th>
+                    <th class="action">Ações</th>
                 </tr>
                 @foreach($categories as $category)
                     <tr>
                         <td>{{ $category->id }}</td>
                         <td>{{ $category->name }}</td>
+                        <td>{{ $category->description }}</td>
+                        <td>{{ ($category->active ? "Sim" : "Não") }}</td>
                         <td>
                             <form action="{{ route('categories.destroy', ['id' => $category->id]) }}" method="POST">
                                 {{ method_field('DELETE') }}
@@ -39,4 +43,29 @@
         </div>
     </div>
 </div>
+<style>
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+}
+
+td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+th{
+    width: 10%;
+}
+
+.description{
+    width: 50%;
+}
+
+.action {
+    width: 20%;
+}
+
+</style>
 @endsection
